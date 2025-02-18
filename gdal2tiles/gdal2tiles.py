@@ -129,7 +129,10 @@ DEFAULT_GDAL2TILES_OPTIONS = {
     'copyright': '',
     'googlekey': 'INSERT_YOUR_KEY_HERE',
     'bingkey': 'INSERT_YOUR_KEY_HERE',
-    'nb_processes': 1
+    'nb_processes': 1,
+    'request_x': -1,                            # オンデマンドサービスで追加 generate_base_tilesで使用 by isono 20225/02/18
+    'request_y': -1,                            # オンデマンドサービスで追加 generate_base_tilesで使用 by isono 20225/02/18
+    'ondemand_range': 5                         # オンデマンドサービスで追加 generate_base_tilesで使用 by isono 20225/02/18
 }
 
 
@@ -1172,6 +1175,16 @@ def create_overview_tiles(tile_job_info, output_folder, options):
                     progress_bar.log_progress()
 
 
+# オンデマンドタイルを生成する
+def create_ondemand_tiles(input_file, output_folder, z, x, y):
+    options = process_options(input_file, output_folder, {'zoom':str(z),'resume':True, 'webviewer':'', 'request_y':y, 'request_x':x})
+    conf, tile_details = worker_tile_details(input_file, output_folder, options)
+    for tile_detail in tile_details:
+        create_base_tile(conf, tile_detail)
+    shutil.rmtree(os.path.dirname(conf.src_file))
+
+
+
 def process_options(input_file, output_folder, options={}):
 
     _options = DEFAULT_GDAL2TILES_OPTIONS.copy()
@@ -1777,9 +1790,16 @@ class GDAL2Tiles(object):
 
         tz = self.tmaxz
         for ty in range(tmaxy, tminy - 1, -1):
+            # リクエスト座標の範囲内のタイルのみ処理する
+            if self.options.request_y >= 0 and ( ty < self.options.request_y - self.options.ondemand_range or ty > self.options.request_y + self.options.ondemand_range):
+                continue
             for tx in range(tminx, tmaxx + 1):
 
                 ti += 1
+                # リクエスト座標の範囲内のタイルのみ処理する
+                if self.options.request_x >= 0 and ( tx < self.options.request_x - self.options.ondemand_range or tx > self.options.request_x + self.options.ondemand_range):
+                    continue
+                
                 tilefilename = os.path.join(
                     self.output_folder, str(tz), str(tx), "%s.%s" % (ty, self.tileext))
                 if self.options.verbose:
