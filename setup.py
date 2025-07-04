@@ -66,7 +66,7 @@ setup(
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='gdal2tiles',
-    name='gdal2tiles',
+    name='gdal2tiles-od',
     packages=find_packages(include=['gdal2tiles']),
     setup_requires=setup_requirements,
     extras_require={
