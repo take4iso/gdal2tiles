@@ -22,7 +22,7 @@ def gdal_already_installed():
 
 
 def get_required_gdal():
-    gdal_package = 'pygdal'
+    gdal_package = 'GDAL'
     try:
         gdal_version = subprocess.check_output(
             'gdal-config --version',
