@@ -1,7 +1,8 @@
 # gdal2tiles (ondemand patch)
 ## はじめに
 [gdal2tiles](https://github.com/tehamalab/gdal2tiles)は、GDALを使用してGeoTIFFをタイル化するためのツールです。  
-このリポジトリは、タイル画像をダイナミックに生成する関数を拡張しています。
+このリポジトリは、タイル画像をダイナミックに生成する関数を拡張しています。  
+動的に変化するラスターデータをXYZタイルとして配信することができます。
 
 ## 使い方
 ```
