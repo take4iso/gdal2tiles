@@ -1177,8 +1177,8 @@ def create_overview_tiles(tile_job_info, output_folder, options):
 
 
 # オンデマンドタイルを生成する
-def create_ondemand_tiles(input_file, output_folder, z, x, y):
-    options = process_options(input_file, output_folder, {'zoom':str(z),'resume':True, 'webviewer':'', 'request_y':y, 'request_x':x})
+def create_ondemand_tiles(input_file, output_folder, z, x, y, resume=False):
+    options = process_options(input_file, output_folder, {'zoom':str(z),'resume':resume, 'webviewer':'', 'request_y':y, 'request_x':x})
 
     conf, tile_details = worker_tile_details(input_file, output_folder, options)
 

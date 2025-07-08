@@ -6,13 +6,14 @@
 
 ## 使い方
 ```
-def create_ondemand_tiles(input_file, output_folder, z, x, y)
+def create_ondemand_tiles(input_file, output_folder, z, x, y, resume=False)
 ```
 - `input_file`: タイル化するGeoTIFFファイルのパス
 - `output_folder`: タイル画像を保存するフォルダのパス
 - `z`: ズームレベル
 - `x`: タイルのX座標
 - `y`: タイルのY座標
+- `resume`: 既存のタイルを再利用するかどうか（デフォルトは`False`）
 
 ## 実装例
 djangoを使用した実装例を以下に示します。
